@@ -16,40 +16,58 @@ class VentanaPrincipal:
 
     def crear_gui(self):
 
-        frm_izq = tk.Frame(self.master, bg="black")
-        frm_izq.grid(row=0, column=0, padx=10, pady=10, rowspan=5)
+    # Frame izquierdo
+     frm_izq = tk.Frame(self.master, bg="black")
+     frm_izq.grid(row=0, column=0, padx=10, pady=10, rowspan=5, sticky="nsew")
 
-        frm_der = tk.Frame(self.master, bg="black")
-        frm_der.grid(row=0, column=1, padx=10, pady=10, rowspan=5)
+    # Frame derecho
+     frm_der = tk.Frame(self.master, bg="black")
+     frm_der.grid(row=0, column=1, padx=10, pady=10, rowspan=5, sticky="nsew")
 
-        self.etq_codigo = tk.Label(frm_izq, text="Script", bg="black", fg="#00FF7F")
-        self.etq_codigo.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
+    # Frame inferior
+     frm_btn = tk.Frame(self.master, bg="black")
+     frm_btn.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
-        self.cuadro_txt = scrolledtext.ScrolledText(frm_izq, wrap=tk.WORD, height=40, width=60)
-        self.cuadro_txt.grid(row=1, column=0, padx=10, pady=5)
+    # Configuración de columnas y filas para que se expandan correctamente
+     self.master.grid_rowconfigure(0, weight=1)
+     self.master.grid_rowconfigure(1, weight=0)  # El peso es menor para que no expanda tanto el frame inferior
+     self.master.grid_columnconfigure(0, weight=1)
+     self.master.grid_columnconfigure(1, weight=1)
 
-        self.etq_ejecucion = tk.Label(frm_der, text="Ejecutar", bg="black", fg="#00FF7F")
-        self.etq_ejecucion.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
+    # Contenido del frame izquierdo
+     self.etq_codigo = tk.Label(frm_izq, text="Script", bg="black", fg="#00FF7F")
+     self.etq_codigo.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
 
-        self.cuadro_ejecucion = scrolledtext.ScrolledText(frm_der, wrap=tk.WORD, height=10, width=95, state="disabled")
-        self.cuadro_ejecucion.grid(row=1, column=0, padx=10, pady=(10, 5))
+     self.cuadro_txt = scrolledtext.ScrolledText(frm_izq, wrap=tk.WORD, height=22, width=60)
+     self.cuadro_txt.grid(row=1, column=0, padx=10, pady=5)
 
-        self.etq_automata = tk.Label(frm_der, text="Automata de pila", bg="black", fg="#00FF7F")
-        self.etq_automata.grid(row=2, column=0, padx=10, pady=(10, 5), sticky="w")
+    # Contenido del frame derecho
+     self.etq_ejecucion = tk.Label(frm_der, text="Ejecutar", bg="black", fg="#00FF7F")
+     self.etq_ejecucion.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
 
-        self.tabla_automata = ttk.Treeview(frm_der, columns=("Nombre", "Token", "Estado", "Regla"),
-                                           show="headings")
-        self.tabla_automata.heading("Nombre", text="Nombre")
-        self.tabla_automata.heading("Token", text="Token")
-        self.tabla_automata.heading("Estado", text="Estado")
-        self.tabla_automata.heading("Regla", text="Regla")
-        self.tabla_automata.grid(row=3, column=0, padx=10, pady=5)
+     self.cuadro_ejecucion = scrolledtext.ScrolledText(frm_der, wrap=tk.WORD, height=18, width=95, state="disabled")
+     self.cuadro_ejecucion.grid(row=1, column=0, padx=10, pady=(10, 5))
 
-        self.btn_ejecutar = tk.Button(frm_der, text="Ejecutar", bg="#16770b", fg="white", height=3, width=20, command=self.compilar)
-        self.btn_ejecutar.grid(row=4, column=0, padx=(0, 5), pady=10, sticky="w")
+     self.btn_ejecutar = tk.Button(frm_der, text="Ejecutar", bg="#16770b", fg="white", height=3, width=20, command=self.compilar)
+     self.btn_ejecutar.grid(row=2, column=0, padx=(0, 5), pady=10, sticky="w")
 
-        self.btn_limpiar = tk.Button(frm_der, text="Borrar", bg="#FF0000", fg="white", height=3, width=20, command=self.limpiar)
-        self.btn_limpiar.grid(row=4, column=0, padx=(5, 0), pady=10, sticky="e")
+     self.btn_limpiar = tk.Button(frm_der, text="Borrar", bg="#FF0000", fg="white", height=3, width=20, command=self.limpiar)
+     self.btn_limpiar.grid(row=2, column=0, padx=(5, 0), pady=10, sticky="e")
+
+    # Contenido del frame inferior
+     self.etq_automata = tk.Label(frm_btn, text="Automata de pila", bg="black", fg="#00FF7F")
+     self.etq_automata.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
+
+     self.tabla_automata = ttk.Treeview(frm_btn, columns=("Nombre", "Token", "Estado", "Regla"), show="headings")
+     self.tabla_automata.heading("Nombre", text="Nombre")
+     self.tabla_automata.heading("Token", text="Token")
+     self.tabla_automata.heading("Estado", text="Estado")
+     self.tabla_automata.heading("Regla", text="Regla")
+     self.tabla_automata.grid(row=1, column=0, padx=10, pady=5, sticky="nsew")
+
+    # Ajustar el peso para las filas y columnas del frame inferior
+     frm_btn.grid_rowconfigure(1, weight=1)
+     frm_btn.grid_columnconfigure(0, weight=1)
 
     def limpiar(self):
         self.cuadro_txt.delete("1.0", tk.END)
@@ -171,16 +189,16 @@ class VentanaPrincipal:
 
     def detectar_formato_datos(self, codigo):
         formatos = {
-            "xml": "XML",
-            "json": "JSON",
-            "sql": "SQL"
+           "sql": [ "SQL""SELECT ", "INSERT INTO ", "UPDATE ", "DELETE FROM ", "JOIN "],
+           "xml": ["XML","<", ">"],
+           "json": ["JSON","{", "}", "[", "]", ":"]
         }
         
         for palabra, descripcion in formatos.items():
             if palabra in codigo:
-                return f"-- Se detectó formato de datos: {descripcion} --"
+                return f"-->Se detectó formato de datos: {descripcion}"
 
-        return "-- No se detectó ningún formato de datos XML, JSON o SQL. --"
+        return "--> No se detectó ningún formato de datos XML, JSON o SQL."
 
 def main():
 
