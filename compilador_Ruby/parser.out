@@ -1,0 +1,214 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ADMIRATION
+    ALIAS
+    AMPERSAND
+    AND
+    ANDSYM
+    ARROW
+    BACKSLASH
+    BEGIN
+    BREAK
+    COMMA
+    DIFERENTEQUAL
+    DIVASIGN
+    DIVISION
+    DOT
+    DOUBLEDOT
+    DOUBLEPERCENT
+    DOUBLEQUAL
+    ELSE
+    ELSIF
+    ENSURE
+    EXPONENT
+    EXPONENTASIGN
+    FUNCTIONS
+    GEQSYM
+    GTRSYM
+    KEYLEFT
+    KEYRIGHT
+    LEFTBRACKET
+    LEQSYM
+    LESSYM
+    MINASIGN
+    MINUS
+    MODULEASIGN
+    MULTASIGN
+    MULTIPLICATION
+    NEXT
+    NIL
+    NOT
+    OR
+    ORSYM
+    PERCENT
+    QUESTIONMARK
+    QUOTATIONMARKS
+    REDO
+    RESCUE
+    RETRY
+    RETURN
+    RIGTHBRAKET
+    RIGTHPARENT
+    SELF
+    SEMMICOLOM
+    SQUAREROOT
+    SUM
+    SUMASIGN
+    SUPER
+    UNDEF
+    UNLESS
+    VERTICALBAR
+    YIELD
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> block
+Rule 2     block -> statement_list
+Rule 3     statement -> identifierDecl
+Rule 4     statement -> statement_if
+Rule 5     statement -> statement_for
+Rule 6     statement -> statement_while
+Rule 7     statement -> statement_def
+Rule 8     statement -> statement_puts
+Rule 9     statement -> statement_case
+Rule 10    statement -> statement_until
+Rule 11    statement -> statement_module
+Rule 12    statement -> statement_class
+Rule 13    statement -> statement_call_function
+Rule 14    statement -> statement_function_ruby
+Rule 15    statement_list -> statement
+Rule 16    statement_list -> statement statement_list
+Rule 17    statement_list -> statement_list statement
+Rule 18    statement_list -> PUTS
+Rule 19    statement_list -> empty
+Rule 20    statement_list -> ID
+Rule 21    identifierDecl -> ID assignment_number expression_number
+Rule 22    identifierDecl -> ID assignment_boolean BOOLEAN
+Rule 23    identifierDecl -> ID assignment_string STRING
+Rule 24    expression_number -> NUMBER
+Rule 25    assignment_number -> ASIGN
+Rule 26    assignment_string -> ASIGN
+Rule 27    statement_if -> IF expression_number THEN block END
+Rule 28    statement_for -> FOR ID IN expression_number DO block END
+Rule 29    statement_while -> WHILE expression_number DO block END
+Rule 30    statement_def -> DEF ID LEFTPARENT ID RIGHTPARENT block END
+Rule 31    statement_puts -> PUTS expression_number
+Rule 32    statement_case -> CASE expression_number WHEN expression_number THEN block END
+Rule 33    statement_until -> UNTIL expression_number DO block END
+Rule 34    statement_module -> MODULE ID block END
+Rule 35    statement_class -> CLASS ID block END
+Rule 36    statement_call_function -> ID LEFTPARENT RIGHTPARENT
+Rule 37    statement_function_ruby -> ID LEFTPARENT RIGHTPARENT block END
+Rule 38    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ADMIRATION           : 
+ALIAS                : 
+AMPERSAND            : 
+AND                  : 
+ANDSYM               : 
+ARROW                : 
+ASIGN                : 25 26
+BACKSLASH            : 
+BEGIN                : 
+BOOLEAN              : 22
+BREAK                : 
+CASE                 : 32
+CLASS                : 35
+COMMA                : 
+DEF                  : 30
+DIFERENTEQUAL        : 
+DIVASIGN             : 
+DIVISION             : 
+DO                   : 28 29 33
+DOT                  : 
+DOUBLEDOT            : 
+DOUBLEPERCENT        : 
+DOUBLEQUAL           : 
+ELSE                 : 
+ELSIF                : 
+END                  : 27 28 29 30 32 33 34 35 37
+ENSURE               : 
+EXPONENT             : 
+EXPONENTASIGN        : 
+FOR                  : 28
+FUNCTIONS            : 
+GEQSYM               : 
+GTRSYM               : 
+ID                   : 20 21 22 23 28 30 30 34 35 36 37
+IF                   : 27
+IN                   : 28
+KEYLEFT              : 
+KEYRIGHT             : 
+LEFTBRACKET          : 
+LEFTPARENT           : 30 36 37
+LEQSYM               : 
+LESSYM               : 
+MINASIGN             : 
+MINUS                : 
+MODULE               : 34
+MODULEASIGN          : 
+MULTASIGN            : 
+MULTIPLICATION       : 
+NEXT                 : 
+NIL                  : 
+NOT                  : 
+NUMBER               : 24
+OR                   : 
+ORSYM                : 
+PERCENT              : 
+PUTS                 : 18 31
+QUESTIONMARK         : 
+QUOTATIONMARKS       : 
+REDO                 : 
+RESCUE               : 
+RETRY                : 
+RETURN               : 
+RIGTHBRAKET          : 
+RIGTHPARENT          : 
+SELF                 : 
+SEMMICOLOM           : 
+SQUAREROOT           : 
+STRING               : 23
+SUM                  : 
+SUMASIGN             : 
+SUPER                : 
+THEN                 : 27 32
+UNDEF                : 
+UNLESS               : 
+UNTIL                : 33
+VERTICALBAR          : 
+WHEN                 : 32
+WHILE                : 29
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+RIGHTPARENT          : 30 36 37
+assignment_boolean   : 22
+assignment_number    : 21
+assignment_string    : 23
+block                : 1 27 28 29 30 32 33 34 35 37
+empty                : 19
+expression_number    : 21 27 28 29 31 32 32 33
+identifierDecl       : 3
+program              : 0
+statement            : 15 16 17
+statement_call_function : 13
+statement_case       : 9
+statement_class      : 12
+statement_def        : 7
+statement_for        : 5
+statement_function_ruby : 14
+statement_if         : 4
+statement_list       : 2 16 17
+statement_module     : 11
+statement_puts       : 8
+statement_until      : 10
+statement_while      : 6
+
