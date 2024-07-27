@@ -58,11 +58,9 @@ class VentanaPrincipal:
      self.etq_automata = tk.Label(frm_btn, text="Automata de pila", bg="black", fg="#00FF7F")
      self.etq_automata.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
 
-     self.tabla_automata = ttk.Treeview(frm_btn, columns=("Nombre", "Token", "Estado", "Regla"), show="headings")
+     self.tabla_automata = ttk.Treeview(frm_btn, columns=("Nombre", "Token"), show="headings")
      self.tabla_automata.heading("Nombre", text="Nombre")
      self.tabla_automata.heading("Token", text="Token")
-     self.tabla_automata.heading("Estado", text="Estado")
-     self.tabla_automata.heading("Regla", text="Regla")
      self.tabla_automata.grid(row=1, column=0, padx=10, pady=5, sticky="nsew")
 
     # Ajustar el peso para las filas y columnas del frame inferior

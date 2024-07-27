@@ -1,16 +1,1 @@
-using JSON
-
-data = Dict(
-    "name" => "Alice",
-    "age" => 30,
-    "is_student" => false,
-    "courses" => ["Math", "Science", "Art"]
-)
-
-json_string = JSON.json(data)
-
-println(json_string)
-sql
-parsed_data = JSON.parse(json_string)
-println(parsed_data)
-
+puts
