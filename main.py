@@ -4,6 +4,8 @@ from tkinter import scrolledtext, ttk
 import os
 from compilador_Julia.compilador_Julia import compilador_Julia
 from compilador_Ruby.compilador_Ruby import compilador_Ruby
+import re
+import json
 
 class VentanaPrincipal:
 
@@ -148,9 +150,16 @@ class VentanaPrincipal:
 
         # Mostrar "Julia" en el cuadro de ejecución
         self.cuadro_ejecucion.insert(tk.END, "Lenguaje Julia.\n")
+        self.cuadro_ejecucion.insert(tk.END, "\n")
+        self.cuadro_ejecucion.insert(tk.END, self.detectar_formato_datos(codigo) + "\n"+ "\n")
 
-        self.cuadro_ejecucion.insert(tk.END, self.detectar_formato_datos(codigo) + "\n")
-
+        lineas_embebidas = self.detectar_embebido(codigo)
+        if lineas_embebidas:
+        
+         for linea in lineas_embebidas:
+           self.cuadro_ejecucion.insert(tk.END, f"Line {linea[0]} ({linea[1]}): {linea[2]}\n")
+        
+        self.cuadro_ejecucion.insert(tk.END, "\n")
         # Ejecutar el análisis del compilador_Julia
         for mensaje in comJ.analizador():
             self.cuadro_ejecucion.insert(tk.END, mensaje + "\n")
@@ -168,9 +177,16 @@ class VentanaPrincipal:
 
         # Mostrar "Ruby" en el cuadro de ejecución
         self.cuadro_ejecucion.insert(tk.END, "Lenguaje Ruby.\n")
-
+        self.cuadro_ejecucion.insert(tk.END, "\n")
         self.cuadro_ejecucion.insert(tk.END, self.detectar_formato_datos(codigo) + "\n")
 
+        lineas_embebidas = self.detectar_embebido(codigo)
+        if lineas_embebidas:
+        
+         for linea in lineas_embebidas:
+           self.cuadro_ejecucion.insert(tk.END, f"Line {linea[0]} ({linea[1]}): {linea[2]}\n")
+        
+        self.cuadro_ejecucion.insert(tk.END, "\n")
         # Ejecutar el análisis del compilador_Ruby
         for mensaje in comR.analizadorR():
             self.cuadro_ejecucion.insert(tk.END, mensaje + "\n")
@@ -187,16 +203,35 @@ class VentanaPrincipal:
 
     def detectar_formato_datos(self, codigo):
         formatos = {
-           "sql": [ "SQL""SELECT ", "INSERT INTO ", "UPDATE ", "DELETE FROM ", "JOIN "],
-           "xml": ["XML","<", ">"],
-           "json": ["JSON","{", "}", "[", "]", ":"]
+             "SQL": ["SELECT", "INSERT INTO", "UPDATE", "DELETE","FROM", "JOIN "],
+             "XML": ["<", ">"],
+             "JSON": ["JSON","{", "}", ":"]
         }
         
         for palabra, descripcion in formatos.items():
             if palabra in codigo:
-                return f"-->Se detectó formato de datos: {descripcion}"
+                return f"Se detecta formato {descripcion}"
 
-        return "--> No se detectó ningún formato de datos XML, JSON o SQL."
+        return "No se encontró ningún formato de datos"
+    
+    def detectar_embebido(self, codigo):
+    # Definir patrones de expresión regular refinados para cada formato
+     patrones = {
+        "SQL": re.compile(r'\b(SELECT|INSERT INTO|UPDATE|DELETE)\b.*?\b(FROM|JOIN|WHERE|GROUP BY|ORDER BY|HAVING|SET)\b', re.IGNORECASE),
+        "XML": re.compile(r'<[^>]+>', re.IGNORECASE),  # Detección de etiquetas XML completas
+        "JSON": re.compile(r'\{[^{}]*\}', re.IGNORECASE)  # Detección de bloques JSON simples
+    }
+    
+     lineas_embebidas = []
+     lineas = codigo.split("\n")
+    
+     for i, linea in enumerate(lineas):
+        for formato, patron in patrones.items():
+            if patron.search(linea):
+                lineas_embebidas.append((i + 1, formato, linea))
+                break
+    
+     return lineas_embebidas
 
 def main():
 
